@@ -4,21 +4,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Super Luma Ultimate — Site Officiel</title>
-  <!-- Polices Google et GSAP pour les animations -->
+
+  <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Rajdhani:wght@500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- GSAP Animation Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
   <style>
+    /* VARIABLES CS DE LA PALETTE EXACTE */
     :root {
-      --bg-primary: #0f141d;
-      --bg-secondary: #1b222e;
-      --accent-color: #ff4655;
-      --text-main: #f9f9f9;
-      --text-muted: #7e8c9d;
-      --card-bg: #161d2a;
-      --border-color: rgba(255, 70, 85, 0.3);
-      --font-title: 'Oswald', sans-serif;
+      /* Fonds */
+      --bg-nuit-profond: #05070F;
+      --bg-bleu-nuit: #0B1020;
+      --bg-ardoise: #1A2238;
+      --bg-brique-sombre: #252B45;
+      
+      /* Néon Principal */
+      --violet-sombre: #2A1B5C;
+      --violet-profond: #5B3FD9;
+      --violet-neon: #7C5CFF;
+      
+      /* Accent & Texte */
+      --cyan: #22D3EE;
+      --gris-bleu: #6B7AA8;
+      --blanc-bleute: #E8ECFF;
+
+      /* Typographies */
+      --font-heading: 'Oswald', sans-serif;
+      --font-tech: 'Rajdhani', sans-serif;
       --font-body: 'Roboto', sans-serif;
     }
 
@@ -26,13 +44,26 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      scroll-behavior: smooth;
     }
 
     body {
-      background-color: var(--bg-primary);
-      color: var(--text-main);
+      background-color: var(--bg-nuit-profond);
+      color: var(--blanc-bleute);
       font-family: var(--font-body);
       overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Canvas d'arrière-plan interactif */
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
     }
 
     /* En-tête / Navigation */
@@ -40,22 +71,22 @@
       position: fixed;
       top: 0;
       width: 100%;
-      height: 70px;
-      background: rgba(15, 20, 29, 0.95);
-      border-bottom: 1px solid var(--border-color);
+      height: 80px;
+      background: rgba(11, 16, 32, 0.85);
+      border-bottom: 1px solid rgba(124, 92, 255, 0.25);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 40px;
+      padding: 0 50px;
       z-index: 1000;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
     }
 
     .logo {
-      font-family: var(--font-title);
-      font-size: 1.8rem;
+      font-family: var(--font-heading);
+      font-size: 2rem;
       font-weight: 700;
-      color: var(--text-main);
+      color: var(--blanc-bleute);
       text-transform: uppercase;
       letter-spacing: 2px;
       display: flex;
@@ -64,193 +95,868 @@
     }
 
     .logo span {
-      color: var(--accent-color);
+      color: var(--cyan);
+      text-shadow: 0 0 12px rgba(34, 211, 238, 0.6);
     }
 
     nav ul {
       display: flex;
       list-style: none;
-      gap: 30px;
+      gap: 35px;
     }
 
     nav a {
-      color: var(--text-main);
+      color: var(--gris-bleu);
       text-decoration: none;
-      font-family: var(--font-title);
+      font-family: var(--font-tech);
+      font-weight: 600;
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--cyan);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--cyan);
+      transition: width 0.3s ease;
+      box-shadow: 0 0 8px var(--cyan);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .btn-glow {
+      background: linear-gradient(135deg, var(--violet-profond), var(--violet-neon));
+      color: #fff;
+      padding: 12px 28px;
+      font-family: var(--font-tech);
+      font-weight: 700;
       font-size: 1.1rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-      transition: color 0.3s ease;
-    }
-
-    nav a:hover {
-      color: var(--accent-color);
-    }
-
-    .btn-play {
-      background-color: var(--accent-color);
-      color: #fff;
-      padding: 10px 24px;
-      font-family: var(--font-title);
-      font-size: 1.1rem;
-      text-transform: uppercase;
-      border: none;
+      border: 1px solid var(--violet-neon);
+      border-radius: 4px;
       cursor: pointer;
-      clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-      transition: transform 0.2s ease, background-color 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(124, 92, 255, 0.4);
     }
 
-    .btn-play:hover {
-      background-color: #e03e4d;
-      transform: scale(1.05);
+    .btn-glow:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(34, 211, 238, 0.7);
+      border-color: var(--cyan);
+      background: linear-gradient(135deg, var(--violet-neon), var(--cyan));
     }
 
-    /* Section Hero */
+    /* Hero Section */
     .hero {
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 0 20px;
-      background: radial-gradient(circle at center, rgba(255, 70, 85, 0.15) 0%, rgba(15, 20, 29, 1) 70%);
+      padding: 120px 20px 60px;
       position: relative;
     }
 
+    .hero-badge {
+      background: rgba(42, 27, 92, 0.6);
+      border: 1px solid var(--violet-neon);
+      color: var(--cyan);
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-family: var(--font-tech);
+      font-size: 0.95rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
     .hero-title {
-      font-family: var(--font-title);
-      font-size: 5rem;
+      font-family: var(--font-heading);
+      font-size: 5.5rem;
       text-transform: uppercase;
       line-height: 1;
       margin-bottom: 20px;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
+      background: linear-gradient(180deg, #FFFFFF 30%, var(--gris-bleu) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8));
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, var(--violet-neon) 0%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .hero-subtitle {
-      font-size: 1.2rem;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin-bottom: 30px;
+      font-size: 1.3rem;
+      color: var(--gris-bleu);
+      max-width: 750px;
+      margin-bottom: 40px;
     }
 
-    /* Grille des Lumas */
-    .section-lumas {
-      padding: 100px 40px;
-      background-color: var(--bg-secondary);
+    .hero-ctas {
+      display: flex;
+      gap: 20px;
     }
 
-    .section-header {
+    .btn-secondary {
+      background: transparent;
+      color: var(--blanc-bleute);
+      border: 1px solid var(--gris-bleu);
+      padding: 12px 28px;
+      font-family: var(--font-tech);
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: rgba(34, 211, 238, 0.05);
+    }
+
+    /* Section Sections Titres */
+    .section-title-wrap {
       text-align: center;
       margin-bottom: 60px;
     }
 
-    .section-title {
-      font-family: var(--font-title);
-      font-size: 3rem;
+    .section-tag {
+      font-family: var(--font-tech);
+      color: var(--cyan);
       text-transform: uppercase;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
+      font-size: 1rem;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 8px;
     }
 
-    .luma-grid {
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 3.2rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--blanc-bleute);
+    }
+
+    /* Section Concept & Gameplay */
+    .section-about {
+      padding: 120px 60px;
+      background: var(--bg-bleu-nuit);
+      position: relative;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: center;
+    }
+
+    .about-card {
+      background: var(--bg-ardoise);
+      border: 1px solid rgba(124, 92, 255, 0.2);
+      border-radius: 8px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      transition: border-color 0.3s;
+    }
+
+    .about-card:hover {
+      border-color: var(--cyan);
+    }
+
+    .about-card h3 {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      color: var(--cyan);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .about-card p {
+      color: var(--blanc-bleute);
+      font-size: 1.05rem;
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+
+    /* Features Grid */
+    .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 30px;
       max-width: 1200px;
-      margin: 0 auto;
+      margin: 60px auto 0;
     }
 
-    .luma-card {
-      background-color: var(--card-bg);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 4px;
-      padding: 25px;
-      position: relative;
-      overflow: hidden;
+    .feature-box {
+      background: var(--bg-brique-sombre);
+      border: 1px solid rgba(107, 122, 168, 0.2);
+      padding: 30px;
+      border-radius: 6px;
+      text-align: center;
       transition: transform 0.3s ease, border-color 0.3s ease;
     }
 
-    .luma-card:hover {
+    .feature-box:hover {
       transform: translateY(-8px);
-      border-color: var(--accent-color);
+      border-color: var(--violet-neon);
+      box-shadow: 0 10px 25px rgba(124, 92, 255, 0.2);
     }
 
-    .luma-card h3 {
-      font-family: var(--font-title);
-      font-size: 1.8rem;
+    .feature-icon {
+      font-size: 2.5rem;
+      color: var(--cyan);
+      margin-bottom: 20px;
+    }
+
+    .feature-box h4 {
+      font-family: var(--font-tech);
+      font-size: 1.5rem;
       text-transform: uppercase;
       margin-bottom: 10px;
-      color: var(--accent-color);
+      color: var(--blanc-bleute);
     }
 
-    .luma-card p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.5;
+    /* Showcase des Lumas (Roster Interactive) */
+    .section-lumas {
+      padding: 120px 60px;
+      background: var(--bg-nuit-profond);
+    }
+
+    .roster-container {
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--bg-bleu-nuit);
+      border: 1px solid var(--violet-sombre);
+      border-radius: 12px;
+      padding: 30px;
+    }
+
+    .roster-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .roster-item {
+      background: var(--bg-ardoise);
+      border: 1px solid transparent;
+      padding: 18px 25px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.3s ease;
+    }
+
+    .roster-item h4 {
+      font-family: var(--font-tech);
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      color: var(--blanc-bleute);
+    }
+
+    .roster-item span {
+      font-size: 0.85rem;
+      color: var(--gris-bleu);
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .roster-item:hover, .roster-item.active {
+      background: var(--violet-sombre);
+      border-color: var(--cyan);
+      box-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
+    }
+
+    .roster-item.active h4 {
+      color: var(--cyan);
+    }
+
+    .luma-preview {
+      background: var(--bg-ardoise);
+      border-radius: 8px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(124, 92, 255, 0.3);
+    }
+
+    .luma-preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 25px;
+    }
+
+    .luma-name {
+      font-family: var(--font-heading);
+      font-size: 3rem;
+      color: var(--blanc-bleute);
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .luma-role {
+      color: var(--cyan);
+      font-family: var(--font-tech);
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .luma-desc {
+      font-size: 1.1rem;
+      color: var(--blanc-bleute);
+      margin-bottom: 30px;
+      opacity: 0.95;
+    }
+
+    .luma-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .stat-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .stat-name {
+      width: 100px;
+      font-family: var(--font-tech);
+      font-size: 1rem;
+      text-transform: uppercase;
+      color: var(--gris-bleu);
+    }
+
+    .stat-bar {
+      flex: 1;
+      height: 10px;
+      background: var(--bg-brique-sombre);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .stat-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--violet-neon), var(--cyan));
+      width: 0%;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Section Roadmap */
+    .section-roadmap {
+      padding: 120px 60px;
+      background: var(--bg-bleu-nuit);
+    }
+
+    .timeline {
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 100%;
+      background: var(--violet-sombre);
+    }
+
+    .timeline-item {
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 40px;
+      position: relative;
+      margin-bottom: 50px;
+      width: 50%;
+    }
+
+    .timeline-item:nth-child(even) {
+      align-self: flex-end;
+      justify-content: flex-start;
+      padding-right: 0;
+      padding-left: 40px;
+      margin-left: 50%;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      right: -9px;
+      top: 15px;
+      width: 16px;
+      height: 16px;
+      background: var(--cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--cyan);
+    }
+
+    .timeline-item:nth-child(even) .timeline-dot {
+      right: auto;
+      left: -7px;
+    }
+
+    .timeline-content {
+      background: var(--bg-ardoise);
+      border: 1px solid rgba(124, 92, 255, 0.2);
+      padding: 25px;
+      border-radius: 8px;
+    }
+
+    .timeline-content h4 {
+      font-family: var(--font-tech);
+      font-size: 1.4rem;
+      color: var(--cyan);
+      margin-bottom: 8px;
     }
 
     /* Footer */
     footer {
-      background-color: #0b0e14;
-      padding: 40px;
+      background: var(--bg-nuit-profond);
+      border-top: 1px solid var(--bg-brique-sombre);
+      padding: 60px 40px 30px;
       text-align: center;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      color: var(--text-muted);
-      font-size: 0.9rem;
+    }
+
+    .footer-socials {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+
+    .footer-socials a {
+      color: var(--gris-bleu);
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-socials a:hover {
+      color: var(--cyan);
+    }
+
+    /* Modal Trailer */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(5, 7, 15, 0.9);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-content {
+      width: 80%;
+      max-width: 900px;
+      aspect-ratio: 16/9;
+      background: #000;
+      border: 1px solid var(--violet-neon);
+      box-shadow: 0 0 30px rgba(124, 92, 255, 0.5);
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: var(--blanc-bleute);
+      font-size: 2rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 992px) {
+      header { padding: 0 20px; }
+      nav { display: none; }
+      .hero-title { font-size: 3.5rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .roster-container { grid-template-columns: 1fr; }
+      .timeline::before { left: 20px; }
+      .timeline-item, .timeline-item:nth-child(even) {
+        width: 100%;
+        margin-left: 0;
+        padding-left: 50px;
+        padding-right: 0;
+      }
+      .timeline-dot, .timeline-item:nth-child(even) .timeline-dot {
+        left: 12px;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- Background Animated Canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Navigation -->
   <header>
-    <div class="logo">Super <span>Luma</span> Ultimate</div>
+    <div class="logo"><i class="fa-solid fa-bolt"></i> Super <span>Luma</span></div>
     <nav>
       <ul>
-        <li><a href="#hero">Accueil</a></li>
+        <li><a href="#hero" class="active">Accueil</a></li>
+        <li><a href="#about">Le Jeu</a></li>
         <li><a href="#lumas">Lumas</a></li>
-        <li><a href="#features">Modes</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
       </ul>
     </nav>
-    <button class="btn-play">Jouer Maintenant</button>
+    <button class="btn-glow" onclick="openModal()">Voir le Trailer</button>
   </header>
 
+  <!-- Hero Section -->
   <section id="hero" class="hero">
-    <h1 class="hero-title">Super Luma Ultimate</h1>
-    <p class="hero-subtitle">Maîtrisez des capacités uniques, affrontez vos adversaires dans des arènes dynamiques et devenez la légende ultime.</p>
-    <button class="btn-play" style="font-size: 1.3rem; padding: 14px 36px;">Rejoindre l'Arène</button>
+    <div class="hero-badge"><i class="fa-solid fa-sparkles"></i> Nouveau Jeu 2D Action-Plateforme</div>
+    <h1 class="hero-title">Super Luma <span>Ultimate</span></h1>
+    <p class="hero-subtitle">Plongez dans des arènes 2D intenses où vitesse, précision et maîtrise des pouvoirs élémentaires dictent la victoire. Dominez le néon, devenez ultime.</p>
+    <div class="hero-ctas">
+      <button class="btn-glow" style="padding: 15px 38px; font-size: 1.2rem;">Jouer Maintenant</button>
+      <button class="btn-secondary" onclick="openModal()"><i class="fa-solid fa-play"></i> Découvrir le Gameplay</button>
+    </div>
   </section>
 
+  <!-- Section Présentation & Gamemodes -->
+  <section id="about" class="section-about">
+    <div class="section-title-wrap">
+      <span class="section-tag">Univers & Mécaniques</span>
+      <h2 class="section-title">L'Expérience de Jeu</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card">
+        <h3><i class="fa-solid fa-gamepad"></i> Un Gameplay 2D Nervé</h3>
+        <p><strong>Super Luma Ultimate</strong> mêle la précision du jeu de plateforme à la compétitivité d'un brawler d'arène. Chaque personnage dispose d'une mobilité unique (dashs, sauts muraux, téléportation) couplée à des capacités néon dévastatrices.</p>
+        <p>Affrontez vos amis en local ou en ligne dans des matchs rythmés où chaque seconde compte.</p>
+      </div>
+
+      <div class="about-card">
+        <h3><i class="fa-solid fa-trophy"></i> Le But du Jeu</h3>
+        <p>Votre objectif est de capturer les <strong>Orbes de Luma</strong> générées dynamiquement dans l'arène pour charger votre capacité Ultime. Éjectez vos adversaires de l'écran ou épuisez leurs points de vie avant qu'ils ne verrouillent le contrôle du terrain.</p>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="features-grid">
+      <div class="feature-box">
+        <i class="fa-solid fa-users feature-icon"></i>
+        <h4>Multi-Joueur</h4>
+        <p>Modes 1v1, 2v2 et Chacun pour Soi jusqu'à 4 joueurs en ligne et local.</p>
+      </div>
+      <div class="feature-box">
+        <i class="fa-solid fa-wand-magic-sparkles feature-icon"></i>
+        <h4>Capacités Néon</h4>
+        <p>Arbre de compétences évolutif et combos élémentaires uniques.</p>
+      </div>
+      <div class="feature-box">
+        <i class="fa-solid fa-map-location-dot feature-icon"></i>
+        <h4>Arènes Évolutives</h4>
+        <p>Cartes dynamiques avec pièges environnementaux et événements aléatoires.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Showcase des Lumas -->
   <section id="lumas" class="section-lumas">
-    <div class="section-header">
-      <h2 class="section-title">Choisissez Votre Luma</h2>
+    <div class="section-title-wrap">
+      <span class="section-tag">Roster Officiel</span>
+      <h2 class="section-title">Choisissez votre Luma</h2>
     </div>
-    <div class="luma-grid">
-      <div class="luma-card">
-        <h3>Luma Éclair</h3>
-        <p>Spécialiste de la vitesse. Utilise des déplacements fulgurants pour désorienter ses adversaires et frapper au moment opportun.</p>
+
+    <div class="roster-container">
+      <div class="roster-list">
+        <div class="roster-item active" onclick="selectLuma(0)">
+          <h4>Luma Éclair</h4>
+          <span>Vitesse</span>
+        </div>
+        <div class="roster-item" onclick="selectLuma(1)">
+          <h4>Luma Bouclier</h4>
+          <span>Défense</span>
+        </div>
+        <div class="roster-item" onclick="selectLuma(2)">
+          <h4>Luma Astral</h4>
+          <span>Contrôle</span>
+        </div>
       </div>
-      <div class="luma-card">
-        <h3>Luma Bouclier</h3>
-        <p>Un protecteur robuste capable d'absorber les attaques lourdes et de créer des barrières d'énergie pour son équipe.</p>
-      </div>
-      <div class="luma-card">
-        <h3>Luma Astral</h3>
-        <p>Maître de la manipulation spatiale. Il invoque des failles énergétiques et contrôle le rythme du combat à distance.</p>
+
+      <div class="luma-preview" id="luma-display">
+        <div>
+          <div class="luma-preview-header">
+            <div>
+              <h3 class="luma-name" id="luma-name">Luma Éclair</h3>
+              <span class="luma-role" id="luma-role">Spécialiste Vitesse</span>
+            </div>
+          </div>
+          <p class="luma-desc" id="luma-desc">Excellant dans les attaques éclair et les répliques rapides. Capable d'exécuter un double-dash à travers les attaques ennemies.</p>
+        </div>
+
+        <div class="luma-stats">
+          <div class="stat-bar-wrap">
+            <span class="stat-name">Vitesse</span>
+            <div class="stat-bar"><div class="stat-fill" id="stat-speed" style="width: 95%;"></div></div>
+          </div>
+          <div class="stat-bar-wrap">
+            <span class="stat-name">Attaque</span>
+            <div class="stat-bar"><div class="stat-fill" id="stat-atk" style="width: 70%;"></div></div>
+          </div>
+          <div class="stat-bar-wrap">
+            <span class="stat-name">Défense</span>
+            <div class="stat-bar"><div class="stat-fill" id="stat-def" style="width: 40%;"></div></div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- Section Roadmap -->
+  <section id="roadmap" class="section-roadmap">
+    <div class="section-title-wrap">
+      <span class="section-tag">Feuille de Route</span>
+      <h2 class="section-title">Développement</h2>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h4>Q1 2026 — Alpha Fermée</h4>
+          <p>Tests des mécaniques de base du gameplay 2D, équilibrage des 3 premiers Lumas et validation du code réseau.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h4>Q2 2026 — Bêta Publique</h4>
+          <p>Ouverture des serveurs multijoueurs, ajout de 2 nouvelles arènes et système de classement compétitif.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h4>Q4 2026 — Lancement Officiel</h4>
+          <p>Sortie de la version 1.0 sur PC et consoles, mode histoire solo et événements de saison.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
   <footer>
-    <p>© 2026 Super Luma Ultimate. Tous droits réservés.</p>
+    <div class="footer-socials">
+      <a href="#"><i class="fa-brands fa-discord"></i></a>
+      <a href="#"><i class="fa-brands fa-twitter"></i></a>
+      <a href="#"><i class="fa-brands fa-youtube"></i></a>
+      <a href="#"><i class="fa-brands fa-steam"></i></a>
+    </div>
+    <p>&copy; 2026 Super Luma Ultimate. Développé avec passion pour l'eSport et les jeux 2D.</p>
   </footer>
 
+  <!-- Modal Video Trailer -->
+  <div class="modal" id="videoModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <p style="color: var(--cyan); font-family: var(--font-tech); font-size: 1.4rem;"><i class="fa-solid fa-film"></i> [ Bande-annonce Gameplay 2D — Super Luma Ultimate ]</p>
+    </div>
+  </div>
+
   <script>
-    // Animation d'entrée avec GSAP
-    document.addEventListener("DOMContentLoaded", () => {
-      gsap.from(".hero-title", { opacity: 0, y: -50, duration: 1, ease: "power3.out" });
-      gsap.from(".hero-subtitle", { opacity: 0, y: 30, duration: 1, delay: 0.3, ease: "power3.out" });
-      gsap.from(".hero .btn-play", { opacity: 0, scale: 0.8, duration: 0.8, delay: 0.6, ease: "back.out(1.7)" });
+    // DATA LUMAS
+    const lumaData = [
+      {
+        name: "Luma Éclair",
+        role: "Spécialiste Vitesse",
+        desc: "Excellant dans les attaques éclair et les répliques rapides. Capable d'exécuter un double-dash électrique et d'aveugler ses adversaires.",
+        speed: "95%",
+        atk: "70%",
+        def: "40%"
+      },
+      {
+        name: "Luma Bouclier",
+        role: "Protecteur Défensif",
+        desc: "Un combattant imposant capable de bloquer les projectiles lourds et d'éjecter les attaquants à l'aide d'ondes de choc de zone.",
+        speed: "45%",
+        atk: "65%",
+        def: "95%"
+      },
+      {
+        name: "Luma Astral",
+        role: "Contrôleur de Zone",
+        desc: "Manipule la gravité et invoque des failles ardoises. Il piège les ennemis à distance et réorganise le champ de bataille.",
+        speed: "65%",
+        atk: "90%",
+        def: "50%"
+      }
+    ];
+
+    function selectLuma(index) {
+      const items = document.querySelectorAll('.roster-item');
+      items.forEach(item => item.classList.remove('active'));
+      items[index].classList.add('active');
+
+      const data = lumaData[index];
+      
+      // Animation GSAP du changement de Luma
+      gsap.to('#luma-display', {
+        opacity: 0,
+        y: 10,
+        duration: 0.2,
+        onComplete: () => {
+          document.getElementById('luma-name').innerText = data.name;
+          document.getElementById('luma-role').innerText = data.role;
+          document.getElementById('luma-desc').innerText = data.desc;
+          document.getElementById('stat-speed').style.width = data.speed;
+          document.getElementById('stat-atk').style.width = data.atk;
+          document.getElementById('stat-def').style.width = data.def;
+
+          gsap.to('#luma-display', { opacity: 1, y: 0, duration: 0.3 });
+        }
+      });
+    }
+
+    // Modal Handlers
+    function openModal() {
+      document.getElementById('videoModal').style.display = 'flex';
+    }
+    function closeModal() {
+      document.getElementById('videoModal').style.display = 'none';
+    }
+
+    // GSAP Scroll Animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.from(".hero-badge", { opacity: 0, y: -20, duration: 0.8, delay: 0.2 });
+    gsap.from(".hero-title", { opacity: 0, scale: 0.9, duration: 1, delay: 0.4 });
+    gsap.from(".hero-subtitle", { opacity: 0, y: 20, duration: 0.8, delay: 0.7 });
+    gsap.from(".hero-ctas", { opacity: 0, y: 20, duration: 0.8, delay: 0.9 });
+
+    gsap.from(".about-card", {
+      scrollTrigger: { trigger: "#about", start: "top 75%" },
+      opacity: 0,
+      y: 40,
+      duration: 0.8,
+      stagger: 0.3
     });
+
+    gsap.from(".feature-box", {
+      scrollTrigger: { trigger: ".features-grid", start: "top 80%" },
+      opacity: 0,
+      y: 30,
+      duration: 0.6,
+      stagger: 0.2
+    });
+
+    // CANVA PARTICULES INTERACTIF (Palette de Couleurs)
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const particles = [];
+    const colors = ['#7C5CFF', '#22D3EE', '#5B3FD9', '#2A1B5C'];
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 1;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.alpha = Math.random() * 0.5 + 0.2;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+          this.reset();
+        }
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < 75; i++) {
+      particles.push(new Particle());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
   </script>
 </body>
 </html>
