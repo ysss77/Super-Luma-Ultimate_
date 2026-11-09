@@ -8,7 +8,7 @@
   <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Rajdhani:wght@500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rajdhani:wght@600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- GSAP Animation Library -->
@@ -16,7 +16,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
   <style>
-    /* VARIABLES CS DE LA PALETTE EXACTE */
+    /* VARIABLES DE LA PALETTE (Bleu Nuit + Violet + Cyan) */
     :root {
       /* Fonds */
       --bg-nuit-profond: #05070F;
@@ -34,10 +34,18 @@
       --gris-bleu: #6B7AA8;
       --blanc-bleute: #E8ECFF;
 
-      /* Typographies */
-      --font-heading: 'Oswald', sans-serif;
+      /* Typographie spécifique */
+      --font-bomb: 'The Bomb Sound', 'Permanent Marker', impact, sans-serif;
       --font-tech: 'Rajdhani', sans-serif;
       --font-body: 'Roboto', sans-serif;
+    }
+
+    /* Déclaration locale de la police "The Bomb Sound" */
+    @font-face {
+      font-family: 'The Bomb Sound';
+      src: local('The Bomb Sound'), local('TheBombSound');
+      font-weight: normal;
+      font-style: normal;
     }
 
     * {
@@ -71,9 +79,9 @@
       position: fixed;
       top: 0;
       width: 100%;
-      height: 80px;
-      background: rgba(11, 16, 32, 0.85);
-      border-bottom: 1px solid rgba(124, 92, 255, 0.25);
+      height: 85px;
+      background: rgba(11, 16, 32, 0.9);
+      border-bottom: 1px solid rgba(124, 92, 255, 0.3);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -83,20 +91,20 @@
     }
 
     .logo {
-      font-family: var(--font-heading);
-      font-size: 2rem;
-      font-weight: 700;
+      font-family: var(--font-bomb);
+      font-size: 2.2rem;
       color: var(--blanc-bleute);
       text-transform: uppercase;
       letter-spacing: 2px;
       display: flex;
       align-items: center;
       gap: 10px;
+      text-shadow: 0 0 10px rgba(124, 92, 255, 0.5);
     }
 
     .logo span {
       color: var(--cyan);
-      text-shadow: 0 0 12px rgba(34, 211, 238, 0.6);
+      text-shadow: 0 0 12px rgba(34, 211, 238, 0.8);
     }
 
     nav ul {
@@ -109,8 +117,8 @@
       color: var(--gris-bleu);
       text-decoration: none;
       font-family: var(--font-tech);
-      font-weight: 600;
-      font-size: 1.15rem;
+      font-weight: 700;
+      font-size: 1.2rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
       transition: all 0.3s ease;
@@ -127,7 +135,7 @@
       bottom: -6px;
       left: 0;
       width: 0%;
-      height: 2px;
+      height: 3px;
       background: var(--cyan);
       transition: width 0.3s ease;
       box-shadow: 0 0 8px var(--cyan);
@@ -143,23 +151,22 @@
       padding: 12px 28px;
       font-family: var(--font-tech);
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       text-transform: uppercase;
       letter-spacing: 1px;
       border: 1px solid var(--violet-neon);
       border-radius: 4px;
       cursor: pointer;
-      position: relative;
-      overflow: hidden;
       transition: all 0.3s ease;
       box-shadow: 0 0 15px rgba(124, 92, 255, 0.4);
     }
 
     .btn-glow:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 25px rgba(34, 211, 238, 0.7);
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 0 25px rgba(34, 211, 238, 0.8);
       border-color: var(--cyan);
       background: linear-gradient(135deg, var(--violet-neon), var(--cyan));
+      color: var(--bg-nuit-profond);
     }
 
     /* Hero Section */
@@ -178,39 +185,33 @@
       background: rgba(42, 27, 92, 0.6);
       border: 1px solid var(--violet-neon);
       color: var(--cyan);
-      padding: 6px 18px;
+      padding: 6px 20px;
       border-radius: 20px;
       font-family: var(--font-tech);
-      font-size: 0.95rem;
+      font-size: 1rem;
       letter-spacing: 2px;
       text-transform: uppercase;
       margin-bottom: 25px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
     .hero-title {
-      font-family: var(--font-heading);
-      font-size: 5.5rem;
+      font-family: var(--font-bomb);
+      font-size: 5.8rem;
       text-transform: uppercase;
       line-height: 1;
       margin-bottom: 20px;
-      letter-spacing: 4px;
-      background: linear-gradient(180deg, #FFFFFF 30%, var(--gris-bleu) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8));
+      letter-spacing: 3px;
+      color: var(--blanc-bleute);
+      text-shadow: 0 0 20px rgba(124, 92, 255, 0.6);
     }
 
     .hero-title span {
-      background: linear-gradient(135deg, var(--violet-neon) 0%, var(--cyan) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--cyan);
+      text-shadow: 0 0 25px rgba(34, 211, 238, 0.8);
     }
 
     .hero-subtitle {
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       color: var(--gris-bleu);
       max-width: 750px;
       margin-bottom: 40px;
@@ -228,7 +229,7 @@
       padding: 12px 28px;
       font-family: var(--font-tech);
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       text-transform: uppercase;
       letter-spacing: 1px;
       border-radius: 4px;
@@ -239,10 +240,10 @@
     .btn-secondary:hover {
       border-color: var(--cyan);
       color: var(--cyan);
-      background: rgba(34, 211, 238, 0.05);
+      background: rgba(34, 211, 238, 0.08);
     }
 
-    /* Section Sections Titres */
+    /* Section Titres */
     .section-title-wrap {
       text-align: center;
       margin-bottom: 60px;
@@ -260,45 +261,45 @@
     }
 
     .section-title {
-      font-family: var(--font-heading);
-      font-size: 3.2rem;
+      font-family: var(--font-bomb);
+      font-size: 3.5rem;
       text-transform: uppercase;
       letter-spacing: 2px;
       color: var(--blanc-bleute);
+      text-shadow: 0 0 15px rgba(124, 92, 255, 0.4);
     }
 
-    /* Section Concept & Gameplay */
+    /* Section Présentation & Gamemodes */
     .section-about {
       padding: 120px 60px;
       background: var(--bg-bleu-nuit);
-      position: relative;
     }
 
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 60px;
+      gap: 40px;
       max-width: 1200px;
       margin: 0 auto;
-      align-items: center;
     }
 
     .about-card {
       background: var(--bg-ardoise);
-      border: 1px solid rgba(124, 92, 255, 0.2);
+      border: 1px solid rgba(124, 92, 255, 0.25);
       border-radius: 8px;
       padding: 40px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      transition: border-color 0.3s;
+      transition: all 0.3s ease;
     }
 
     .about-card:hover {
       border-color: var(--cyan);
+      transform: translateY(-5px);
     }
 
     .about-card h3 {
-      font-family: var(--font-heading);
-      font-size: 2rem;
+      font-family: var(--font-bomb);
+      font-size: 2.2rem;
       color: var(--cyan);
       margin-bottom: 15px;
       display: flex;
@@ -309,7 +310,7 @@
     .about-card p {
       color: var(--blanc-bleute);
       font-size: 1.05rem;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       opacity: 0.9;
     }
 
@@ -325,8 +326,8 @@
     .feature-box {
       background: var(--bg-brique-sombre);
       border: 1px solid rgba(107, 122, 168, 0.2);
-      padding: 30px;
-      border-radius: 6px;
+      padding: 35px 25px;
+      border-radius: 8px;
       text-align: center;
       transition: transform 0.3s ease, border-color 0.3s ease;
     }
@@ -334,7 +335,7 @@
     .feature-box:hover {
       transform: translateY(-8px);
       border-color: var(--violet-neon);
-      box-shadow: 0 10px 25px rgba(124, 92, 255, 0.2);
+      box-shadow: 0 10px 25px rgba(124, 92, 255, 0.3);
     }
 
     .feature-icon {
@@ -344,14 +345,13 @@
     }
 
     .feature-box h4 {
-      font-family: var(--font-tech);
-      font-size: 1.5rem;
-      text-transform: uppercase;
+      font-family: var(--font-bomb);
+      font-size: 1.6rem;
       margin-bottom: 10px;
       color: var(--blanc-bleute);
     }
 
-    /* Showcase des Lumas (Roster Interactive) */
+    /* Interactive Roster (Lumas Showcase) */
     .section-lumas {
       padding: 120px 60px;
       background: var(--bg-nuit-profond);
@@ -378,7 +378,7 @@
     .roster-item {
       background: var(--bg-ardoise);
       border: 1px solid transparent;
-      padding: 18px 25px;
+      padding: 20px 25px;
       border-radius: 6px;
       cursor: pointer;
       display: flex;
@@ -388,17 +388,17 @@
     }
 
     .roster-item h4 {
-      font-family: var(--font-tech);
-      font-size: 1.3rem;
-      text-transform: uppercase;
+      font-family: var(--font-bomb);
+      font-size: 1.5rem;
       color: var(--blanc-bleute);
     }
 
     .roster-item span {
-      font-size: 0.85rem;
+      font-family: var(--font-tech);
+      font-size: 0.9rem;
       color: var(--gris-bleu);
       text-transform: uppercase;
-      font-weight: bold;
+      font-weight: 700;
     }
 
     .roster-item:hover, .roster-item.active {
@@ -418,24 +418,16 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      position: relative;
-      overflow: hidden;
       border: 1px solid rgba(124, 92, 255, 0.3);
     }
 
-    .luma-preview-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 25px;
-    }
-
     .luma-name {
-      font-family: var(--font-heading);
-      font-size: 3rem;
+      font-family: var(--font-bomb);
+      font-size: 3.2rem;
       color: var(--blanc-bleute);
       text-transform: uppercase;
       line-height: 1;
+      margin-bottom: 5px;
     }
 
     .luma-role {
@@ -444,12 +436,13 @@
       font-size: 1.2rem;
       text-transform: uppercase;
       letter-spacing: 2px;
+      font-weight: 700;
     }
 
     .luma-desc {
       font-size: 1.1rem;
       color: var(--blanc-bleute);
-      margin-bottom: 30px;
+      margin: 20px 0 30px;
       opacity: 0.95;
     }
 
@@ -468,16 +461,17 @@
     .stat-name {
       width: 100px;
       font-family: var(--font-tech);
-      font-size: 1rem;
+      font-size: 1.05rem;
       text-transform: uppercase;
+      font-weight: 700;
       color: var(--gris-bleu);
     }
 
     .stat-bar {
       flex: 1;
-      height: 10px;
+      height: 12px;
       background: var(--bg-brique-sombre);
-      border-radius: 5px;
+      border-radius: 6px;
       overflow: hidden;
     }
 
@@ -485,7 +479,7 @@
       height: 100%;
       background: linear-gradient(90deg, var(--violet-neon), var(--cyan));
       width: 0%;
-      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: width 0.6s ease-out;
     }
 
     /* Section Roadmap */
@@ -531,28 +525,28 @@
       position: absolute;
       right: -9px;
       top: 15px;
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       background: var(--cyan);
       border-radius: 50%;
-      box-shadow: 0 0 10px var(--cyan);
+      box-shadow: 0 0 12px var(--cyan);
     }
 
     .timeline-item:nth-child(even) .timeline-dot {
       right: auto;
-      left: -7px;
+      left: -9px;
     }
 
     .timeline-content {
       background: var(--bg-ardoise);
-      border: 1px solid rgba(124, 92, 255, 0.2);
+      border: 1px solid rgba(124, 92, 255, 0.25);
       padding: 25px;
       border-radius: 8px;
     }
 
     .timeline-content h4 {
-      font-family: var(--font-tech);
-      font-size: 1.4rem;
+      font-family: var(--font-bomb);
+      font-size: 1.6rem;
       color: var(--cyan);
       margin-bottom: 8px;
     }
@@ -561,7 +555,7 @@
     footer {
       background: var(--bg-nuit-profond);
       border-top: 1px solid var(--bg-brique-sombre);
-      padding: 60px 40px 30px;
+      padding: 50px 40px 30px;
       text-align: center;
     }
 
@@ -569,12 +563,12 @@
       display: flex;
       justify-content: center;
       gap: 25px;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
 
     .footer-socials a {
       color: var(--gris-bleu);
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       transition: color 0.3s ease;
     }
 
@@ -622,7 +616,7 @@
     @media (max-width: 992px) {
       header { padding: 0 20px; }
       nav { display: none; }
-      .hero-title { font-size: 3.5rem; }
+      .hero-title { font-size: 3.8rem; }
       .about-grid { grid-template-columns: 1fr; }
       .roster-container { grid-template-columns: 1fr; }
       .timeline::before { left: 20px; }
@@ -633,14 +627,14 @@
         padding-right: 0;
       }
       .timeline-dot, .timeline-item:nth-child(even) .timeline-dot {
-        left: 12px;
+        left: 11px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Background Animated Canvas -->
+  <!-- Canvas Arrière-plan Animé -->
   <canvas id="bg-canvas"></canvas>
 
   <!-- Navigation -->
@@ -649,9 +643,9 @@
     <nav>
       <ul>
         <li><a href="#hero" class="active">Accueil</a></li>
-        <li><a href="#about">Le Jeu</a></li>
-        <li><a href="#lumas">Lumas</a></li>
-        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#about">Présentation</a></li>
+        <li><a href="#lumas">Personnages</a></li>
+        <li><a href="#roadmap">Feuille de Route</a></li>
       </ul>
     </nav>
     <button class="btn-glow" onclick="openModal()">Voir le Trailer</button>
@@ -661,58 +655,58 @@
   <section id="hero" class="hero">
     <div class="hero-badge"><i class="fa-solid fa-sparkles"></i> Nouveau Jeu 2D Action-Plateforme</div>
     <h1 class="hero-title">Super Luma <span>Ultimate</span></h1>
-    <p class="hero-subtitle">Plongez dans des arènes 2D intenses où vitesse, précision et maîtrise des pouvoirs élémentaires dictent la victoire. Dominez le néon, devenez ultime.</p>
+    <p class="hero-subtitle">Maitrisez des mouvements ultra-rapides, combinez des attaques élémentaires et dominez vos rivaux dans des arènes 2D intenses.</p>
     <div class="hero-ctas">
-      <button class="btn-glow" style="padding: 15px 38px; font-size: 1.2rem;">Jouer Maintenant</button>
-      <button class="btn-secondary" onclick="openModal()"><i class="fa-solid fa-play"></i> Découvrir le Gameplay</button>
+      <button class="btn-glow" style="padding: 15px 38px; font-size: 1.25rem;">Jouer Maintenant</button>
+      <button class="btn-secondary" onclick="openModal()"><i class="fa-solid fa-play"></i> Trailer Gameplay</button>
     </div>
   </section>
 
-  <!-- Section Présentation & Gamemodes -->
+  <!-- Section Présentation du Jeu -->
   <section id="about" class="section-about">
     <div class="section-title-wrap">
-      <span class="section-tag">Univers & Mécaniques</span>
+      <span class="section-tag">Concepts & Mécaniques</span>
       <h2 class="section-title">L'Expérience de Jeu</h2>
     </div>
 
     <div class="about-grid">
       <div class="about-card">
-        <h3><i class="fa-solid fa-gamepad"></i> Un Gameplay 2D Nervé</h3>
-        <p><strong>Super Luma Ultimate</strong> mêle la précision du jeu de plateforme à la compétitivité d'un brawler d'arène. Chaque personnage dispose d'une mobilité unique (dashs, sauts muraux, téléportation) couplée à des capacités néon dévastatrices.</p>
-        <p>Affrontez vos amis en local ou en ligne dans des matchs rythmés où chaque seconde compte.</p>
+        <h3><i class="fa-solid fa-gamepad"></i> Un Gameplay Dynamic 2D</h3>
+        <p><strong>Super Luma Ultimate</strong> propose des affrontements rapides combinant les mécaniques d'un jeu de plateforme technique avec l'intensité des brawlers d'arène.</p>
+        <p>Chaque arène réagit dynamiquement aux attaques et permet d'utiliser le décor pour réaliser des combos spectaculaires.</p>
       </div>
 
       <div class="about-card">
         <h3><i class="fa-solid fa-trophy"></i> Le But du Jeu</h3>
-        <p>Votre objectif est de capturer les <strong>Orbes de Luma</strong> générées dynamiquement dans l'arène pour charger votre capacité Ultime. Éjectez vos adversaires de l'écran ou épuisez leurs points de vie avant qu'ils ne verrouillent le contrôle du terrain.</p>
+        <p>L'objectif principal est d’absorber les <strong>Orbes Néon</strong> apparaissant sur le terrain afin d'alimenter votre jauge Ultime.</p>
+        <p>Déclenchez vos compétences dévastatrices au bon moment pour éjecter vos adversaires hors du terrain ou réduire leur jauge de vie à zéro.</p>
       </div>
     </div>
 
-    <!-- Features -->
     <div class="features-grid">
       <div class="feature-box">
         <i class="fa-solid fa-users feature-icon"></i>
         <h4>Multi-Joueur</h4>
-        <p>Modes 1v1, 2v2 et Chacun pour Soi jusqu'à 4 joueurs en ligne et local.</p>
+        <p>Affrontements de 2 à 4 joueurs en local et en ligne compétitif.</p>
       </div>
       <div class="feature-box">
         <i class="fa-solid fa-wand-magic-sparkles feature-icon"></i>
-        <h4>Capacités Néon</h4>
-        <p>Arbre de compétences évolutif et combos élémentaires uniques.</p>
+        <h4>Pouvoirs Néon</h4>
+        <p>Système d'aptitudes et combos propres à chaque classe de Luma.</p>
       </div>
       <div class="feature-box">
         <i class="fa-solid fa-map-location-dot feature-icon"></i>
         <h4>Arènes Évolutives</h4>
-        <p>Cartes dynamiques avec pièges environnementaux et événements aléatoires.</p>
+        <p>Zones de combat interactives avec événements et pièges en temps réel.</p>
       </div>
     </div>
   </section>
 
-  <!-- Showcase des Lumas -->
+  <!-- Interactive Roster (Lumas) -->
   <section id="lumas" class="section-lumas">
     <div class="section-title-wrap">
-      <span class="section-tag">Roster Officiel</span>
-      <h2 class="section-title">Choisissez votre Luma</h2>
+      <span class="section-tag">Sélection des Combatants</span>
+      <h2 class="section-title">Choisissez Votre Luma</h2>
     </div>
 
     <div class="roster-container">
@@ -733,13 +727,9 @@
 
       <div class="luma-preview" id="luma-display">
         <div>
-          <div class="luma-preview-header">
-            <div>
-              <h3 class="luma-name" id="luma-name">Luma Éclair</h3>
-              <span class="luma-role" id="luma-role">Spécialiste Vitesse</span>
-            </div>
-          </div>
-          <p class="luma-desc" id="luma-desc">Excellant dans les attaques éclair et les répliques rapides. Capable d'exécuter un double-dash à travers les attaques ennemies.</p>
+          <h3 class="luma-name" id="luma-name">Luma Éclair</h3>
+          <span class="luma-role" id="luma-role">Spécialiste Vitesse</span>
+          <p class="luma-desc" id="luma-desc">Spécialisé dans les attaques rapides et les déplacements éclair. Capable de franchir les projectiles grâce à ses dashs néon.</p>
         </div>
 
         <div class="luma-stats">
@@ -763,16 +753,16 @@
   <!-- Section Roadmap -->
   <section id="roadmap" class="section-roadmap">
     <div class="section-title-wrap">
-      <span class="section-tag">Feuille de Route</span>
-      <h2 class="section-title">Développement</h2>
+      <span class="section-tag">Calendrier de Sortie</span>
+      <h2 class="section-title">Feuille de Route</h2>
     </div>
 
     <div class="timeline">
       <div class="timeline-item">
         <div class="timeline-dot"></div>
         <div class="timeline-content">
-          <h4>Q1 2026 — Alpha Fermée</h4>
-          <p>Tests des mécaniques de base du gameplay 2D, équilibrage des 3 premiers Lumas et validation du code réseau.</p>
+          <h4>Q1 2026 — Alpha Test</h4>
+          <p>Validation du système de déplacement, ajustement des collisions 2D et pré-alpha multijoueur.</p>
         </div>
       </div>
 
@@ -780,15 +770,15 @@
         <div class="timeline-dot"></div>
         <div class="timeline-content">
           <h4>Q2 2026 — Bêta Publique</h4>
-          <p>Ouverture des serveurs multijoueurs, ajout de 2 nouvelles arènes et système de classement compétitif.</p>
+          <p>Ouverture du matchmaking en ligne, ajout de 2 nouveaux Lumas et mode partie classée.</p>
         </div>
       </div>
 
       <div class="timeline-item">
         <div class="timeline-dot"></div>
         <div class="timeline-content">
-          <h4>Q4 2026 — Lancement Officiel</h4>
-          <p>Sortie de la version 1.0 sur PC et consoles, mode histoire solo et événements de saison.</p>
+          <h4>Q4 2026 — Sortie Générale</h4>
+          <p>Lancement complet sur PC et consoles avec saisons et événements compétitifs.</p>
         </div>
       </div>
     </div>
@@ -802,24 +792,24 @@
       <a href="#"><i class="fa-brands fa-youtube"></i></a>
       <a href="#"><i class="fa-brands fa-steam"></i></a>
     </div>
-    <p>&copy; 2026 Super Luma Ultimate. Développé avec passion pour l'eSport et les jeux 2D.</p>
+    <p>© 2026 Super Luma Ultimate. Tous droits réservés.</p>
   </footer>
 
   <!-- Modal Video Trailer -->
   <div class="modal" id="videoModal">
     <div class="modal-content">
-      <span class="close-modal" onclick="closeModal()">&times;</span>
-      <p style="color: var(--cyan); font-family: var(--font-tech); font-size: 1.4rem;"><i class="fa-solid fa-film"></i> [ Bande-annonce Gameplay 2D — Super Luma Ultimate ]</p>
+      <span class="close-modal" onclick="closeModal()">×</span>
+      <p style="color: var(--cyan); font-family: var(--font-tech); font-size: 1.4rem;"><i class="fa-solid fa-film"></i> [ Démo Trailer — Super Luma Ultimate ]</p>
     </div>
   </div>
 
   <script>
-    // DATA LUMAS
+    // Données Personnages
     const lumaData = [
       {
         name: "Luma Éclair",
         role: "Spécialiste Vitesse",
-        desc: "Excellant dans les attaques éclair et les répliques rapides. Capable d'exécuter un double-dash électrique et d'aveugler ses adversaires.",
+        desc: "Spécialisé dans les attaques rapides et les déplacements éclair. Capable de franchir les projectiles grâce à ses dashs néon.",
         speed: "95%",
         atk: "70%",
         def: "40%"
@@ -827,7 +817,7 @@
       {
         name: "Luma Bouclier",
         role: "Protecteur Défensif",
-        desc: "Un combattant imposant capable de bloquer les projectiles lourds et d'éjecter les attaquants à l'aide d'ondes de choc de zone.",
+        desc: "Un combattant robuste capable d'absorber les dégâts et de repousser les assaillants avec des boucliers d'énergie.",
         speed: "45%",
         atk: "65%",
         def: "95%"
@@ -835,7 +825,7 @@
       {
         name: "Luma Astral",
         role: "Contrôleur de Zone",
-        desc: "Manipule la gravité et invoque des failles ardoises. Il piège les ennemis à distance et réorganise le champ de bataille.",
+        desc: "Manipule la gravité pour attirer ou repousser ses cibles tout en infligeant des dégâts sur la durée.",
         speed: "65%",
         atk: "90%",
         def: "50%"
@@ -849,7 +839,6 @@
 
       const data = lumaData[index];
       
-      // Animation GSAP du changement de Luma
       gsap.to('#luma-display', {
         opacity: 0,
         y: 10,
@@ -867,13 +856,9 @@
       });
     }
 
-    // Modal Handlers
-    function openModal() {
-      document.getElementById('videoModal').style.display = 'flex';
-    }
-    function closeModal() {
-      document.getElementById('videoModal').style.display = 'none';
-    }
+    // Modal
+    function openModal() { document.getElementById('videoModal').style.display = 'flex'; }
+    function closeModal() { document.getElementById('videoModal').style.display = 'none'; }
 
     // GSAP Scroll Animations
     gsap.registerPlugin(ScrollTrigger);
@@ -899,7 +884,7 @@
       stagger: 0.2
     });
 
-    // CANVA PARTICULES INTERACTIF (Palette de Couleurs)
+    // Canvas Particules (Palette de Couleurs)
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
 
@@ -914,13 +899,11 @@
     const colors = ['#7C5CFF', '#22D3EE', '#5B3FD9', '#2A1B5C'];
 
     class Particle {
-      constructor() {
-        this.reset();
-      }
+      constructor() { this.reset(); }
       reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 1;
+        this.size = Math.random() * 2.5 + 1;
         this.color = colors[Math.floor(Math.random() * colors.length)];
         this.vx = (Math.random() - 0.5) * 0.5;
         this.vy = (Math.random() - 0.5) * 0.5;
@@ -944,16 +927,11 @@
       }
     }
 
-    for (let i = 0; i < 75; i++) {
-      particles.push(new Particle());
-    }
+    for (let i = 0; i < 75; i++) { particles.push(new Particle()); }
 
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.update();
-        p.draw();
-      });
+      particles.forEach(p => { p.update(); p.draw(); });
       requestAnimationFrame(animate);
     }
     animate();
