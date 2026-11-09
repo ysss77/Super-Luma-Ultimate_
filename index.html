@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Super Luma Ultimate — Site Officiel</title>
+  <!-- Polices Google et GSAP pour les animations -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #0f141d;
+      --bg-secondary: #1b222e;
+      --accent-color: #ff4655;
+      --text-main: #f9f9f9;
+      --text-muted: #7e8c9d;
+      --card-bg: #161d2a;
+      --border-color: rgba(255, 70, 85, 0.3);
+      --font-title: 'Oswald', sans-serif;
+      --font-body: 'Roboto', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+    }
+
+    /* En-tête / Navigation */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 70px;
+      background: rgba(15, 20, 29, 0.95);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      font-family: var(--font-title);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo span {
+      color: var(--accent-color);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-family: var(--font-title);
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--accent-color);
+    }
+
+    .btn-play {
+      background-color: var(--accent-color);
+      color: #fff;
+      padding: 10px 24px;
+      font-family: var(--font-title);
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .btn-play:hover {
+      background-color: #e03e4d;
+      transform: scale(1.05);
+    }
+
+    /* Section Hero */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      background: radial-gradient(circle at center, rgba(255, 70, 85, 0.15) 0%, rgba(15, 20, 29, 1) 70%);
+      position: relative;
+    }
+
+    .hero-title {
+      font-family: var(--font-title);
+      font-size: 5rem;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 20px;
+      letter-spacing: 3px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 30px;
+    }
+
+    /* Grille des Lumas */
+    .section-lumas {
+      padding: 100px 40px;
+      background-color: var(--bg-secondary);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-title {
+      font-family: var(--font-title);
+      font-size: 3rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .luma-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .luma-card {
+      background-color: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      padding: 25px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .luma-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent-color);
+    }
+
+    .luma-card h3 {
+      font-family: var(--font-title);
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      color: var(--accent-color);
+    }
+
+    .luma-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #0b0e14;
+      padding: 40px;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Super <span>Luma</span> Ultimate</div>
+    <nav>
+      <ul>
+        <li><a href="#hero">Accueil</a></li>
+        <li><a href="#lumas">Lumas</a></li>
+        <li><a href="#features">Modes</a></li>
+      </ul>
+    </nav>
+    <button class="btn-play">Jouer Maintenant</button>
+  </header>
+
+  <section id="hero" class="hero">
+    <h1 class="hero-title">Super Luma Ultimate</h1>
+    <p class="hero-subtitle">Maîtrisez des capacités uniques, affrontez vos adversaires dans des arènes dynamiques et devenez la légende ultime.</p>
+    <button class="btn-play" style="font-size: 1.3rem; padding: 14px 36px;">Rejoindre l'Arène</button>
+  </section>
+
+  <section id="lumas" class="section-lumas">
+    <div class="section-header">
+      <h2 class="section-title">Choisissez Votre Luma</h2>
+    </div>
+    <div class="luma-grid">
+      <div class="luma-card">
+        <h3>Luma Éclair</h3>
+        <p>Spécialiste de la vitesse. Utilise des déplacements fulgurants pour désorienter ses adversaires et frapper au moment opportun.</p>
+      </div>
+      <div class="luma-card">
+        <h3>Luma Bouclier</h3>
+        <p>Un protecteur robuste capable d'absorber les attaques lourdes et de créer des barrières d'énergie pour son équipe.</p>
+      </div>
+      <div class="luma-card">
+        <h3>Luma Astral</h3>
+        <p>Maître de la manipulation spatiale. Il invoque des failles énergétiques et contrôle le rythme du combat à distance.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Super Luma Ultimate. Tous droits réservés.</p>
+  </footer>
+
+  <script>
+    // Animation d'entrée avec GSAP
+    document.addEventListener("DOMContentLoaded", () => {
+      gsap.from(".hero-title", { opacity: 0, y: -50, duration: 1, ease: "power3.out" });
+      gsap.from(".hero-subtitle", { opacity: 0, y: 30, duration: 1, delay: 0.3, ease: "power3.out" });
+      gsap.from(".hero .btn-play", { opacity: 0, scale: 0.8, duration: 0.8, delay: 0.6, ease: "back.out(1.7)" });
+    });
+  </script>
+</body>
+</html>
